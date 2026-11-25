@@ -7,7 +7,7 @@
   "type": "commonjs",
   "main": "app.js",
   "scripts": {
-    "starts": "node app.js"
+    "start": "node app.js" 
     
   },
   "dependencies": {
