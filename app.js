@@ -37,14 +37,21 @@ app.post("/", function(req,res){
 
 const JsonData = JSON.stringify(Data)
 
-const url = 'https://${process.env.MAILCHIMP_SERVER}.api.mailchimp.com/3.0/lists/${process.env.MAILCHIMP_LIST_ID}'
+const url = `https://${process.env.MAILCHIMP_SERVER}.api.mailchimp.com/3.0/lists/${process.env.MAILCHIMP_LIST_ID}`
 
 const options = {
     method: "POST",
-    auth: 'joeoluchi:${process.env.MAILCHIMP_API_KEY}'
+    auth: `joeoluchi:${process.env.MAILCHIMP_API_KEY}`
 }
 
  const request = https.request(url, options, function(response){
+
+request.on("error", function (err) { 
+    console.log("MailChimp request failed:", err.message) 
+    if (!res.headersSent){
+        res.sendFile(__dirname + "/failure.html")
+    }  })
+
 console.log(response.statusCode)
     if(response.statusCode === 200){
         res.sendFile(__dirname + "/success.html")
